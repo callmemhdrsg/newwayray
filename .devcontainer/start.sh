@@ -13,10 +13,17 @@ UUID4=$(gen_uuid)   # VMess WebSocket        (port 9090)
 UUID5=$(gen_uuid)   # VLESS gRPC             (port 9443)
 UUID6=$(gen_uuid)   # Trojan WebSocket       (port 7777)
 
-# Target IPs — one link per IP will be printed for each config
-IP1="144.76.1.88"
-IP2="50.7.87.4"
+# Target IPs — 10 IPs (previous 5 + 5 new)
+IP1="63.141.252.203"
+IP2="50.7.5.83"
 IP3="94.130.50.12"
+IP4="50.7.87.4"
+IP5="144.76.1.88"
+IP6="85.10.207.48"
+IP7="95.216.69.37"
+IP8="94.130.13.19"
+IP9="94.130.33.41"
+IP10="204.12.196.34"
 
 # ── write the xray config with ALL inbounds ──────────────────────────────────
 cat > /etc/config.json << EOF
@@ -39,8 +46,7 @@ cat > /etc/config.json << EOF
           "mode": "packet-up",
           "path": "/xhttp-pu"
         }
-      },
-      "tag": "vless-xhttp-packetup"
+      }
     },
     {
       "port": 8080,
@@ -58,8 +64,7 @@ cat > /etc/config.json << EOF
           "mode": "stream-up",
           "path": "/xhttp-su"
         }
-      },
-      "tag": "vless-xhttp-streamup"
+      }
     },
     {
       "port": 8880,
@@ -76,8 +81,7 @@ cat > /etc/config.json << EOF
         "wsSettings": {
           "path": "/ws"
         }
-      },
-      "tag": "vless-ws"
+      }
     },
     {
       "port": 9090,
@@ -93,8 +97,7 @@ cat > /etc/config.json << EOF
         "wsSettings": {
           "path": "/vmess-ws"
         }
-      },
-      "tag": "vmess-ws"
+      }
     },
     {
       "port": 9443,
@@ -111,8 +114,7 @@ cat > /etc/config.json << EOF
         "grpcSettings": {
           "serviceName": "grpc"
         }
-      },
-      "tag": "vless-grpc"
+      }
     },
     {
       "port": 7777,
@@ -151,11 +153,11 @@ H9090="${CODESPACE_NAME}-9090.app.github.dev"
 H9443="${CODESPACE_NAME}-9443.app.github.dev"
 H7777="${CODESPACE_NAME}-7777.app.github.dev"
 
-# ── helper: print 3 links (one per IP) for a given config ────────────────────
+# ── helper: print 10 links (one per IP) for a given config ────────────────────
 print_links() {
   local label="$1"
   local link_template="$2"   # must contain __IP__ as placeholder
-  for IP in "$IP1" "$IP2" "$IP3"; do
+  for IP in "$IP1" "$IP2" "$IP3" "$IP4" "$IP5" "$IP6" "$IP7" "$IP8" "$IP9" "$IP10"; do
     echo "   [${IP}]  ${link_template//__IP__/$IP}"
   done
 }
@@ -176,33 +178,27 @@ echo "   🚀  newwayray  –  your V2Ray / Xray links"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
-echo "① VLESS + xHTTP  (packet-up)  ← recommended"
 print_links "VLESS-xHTTP-PacketUp" \
   "vless://${UUID1}@__IP__:443?encryption=none&security=tls&sni=${H443}&host=${H443}&type=xhttp&path=%2Fxhttp-pu&mode=packet-up#VLESS-xHTTP-PacketUp"
 echo ""
 
-echo "② VLESS + xHTTP  (stream-up)"
 print_links "VLESS-xHTTP-StreamUp" \
   "vless://${UUID2}@__IP__:443?encryption=none&security=tls&sni=${H8080}&host=${H8080}&type=xhttp&path=%2Fxhttp-su&mode=stream-up#VLESS-xHTTP-StreamUp"
 echo ""
 
-echo "③ VLESS + WebSocket (WS)"
 print_links "VLESS-WS" \
   "vless://${UUID3}@__IP__:443?encryption=none&security=tls&sni=${H8880}&host=${H8880}&type=ws&path=%2Fws#VLESS-WebSocket"
 echo ""
 
-echo "④ VMess + WebSocket (WS)"
-for IP in "$IP1" "$IP2" "$IP3"; do
+for IP in "$IP1" "$IP2" "$IP3" "$IP4" "$IP5" "$IP6" "$IP7" "$IP8" "$IP9" "$IP10"; do
   echo "   [${IP}]  $(vmess_link "$IP")"
 done
 echo ""
 
-echo "⑤ VLESS + gRPC"
 print_links "VLESS-gRPC" \
   "vless://${UUID5}@__IP__:443?encryption=none&security=tls&sni=${H9443}&host=${H9443}&type=grpc&serviceName=grpc#VLESS-gRPC"
 echo ""
 
-echo "⑥ Trojan + WebSocket (WS)"
 print_links "Trojan-WS" \
   "trojan://${UUID6}@__IP__:443?security=tls&sni=${H7777}&host=${H7777}&type=ws&path=%2Ftrojan-ws#Trojan-WS"
 echo ""
