@@ -14,9 +14,9 @@ UUID5=$(gen_uuid)   # VLESS gRPC             (port 9443)
 UUID6=$(gen_uuid)   # Trojan WebSocket       (port 7777)
 
 # Target IPs — 10 IPs (previous 5 + 5 new)
-IP1="63.141.252.203"
-IP2="50.7.5.83"
-IP3="94.130.50.12"
+IP1="sht.ircf.space"
+IP2="cname.ircf.space"
+IP3="mci.ircf.space"
 IP4="50.7.87.4"
 IP5="144.76.1.88"
 IP6="85.10.207.48"
