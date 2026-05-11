@@ -14,16 +14,17 @@ UUID5=$(gen_uuid)   # VLESS gRPC             (port 9443)
 UUID6=$(gen_uuid)   # Trojan WebSocket       (port 7777)
 
 # Target IPs — 10 IPs (previous 5 + 5 new)
-IP1="sht.ircf.space"
-IP2="cname.ircf.space"
-IP3="mci.ircf.space"
-IP4="50.7.87.4"
-IP5="144.76.1.88"
-IP6="85.10.207.48"
-IP7="95.216.69.37"
-IP8="94.130.13.19"
-IP9="94.130.33.41"
-IP10="204.12.196.34"
+IP1="5.9.1.1"
+IP2="5.9.100.100"
+IP3="49.12.1.1"
+IP4="168.119.1.1"
+IP5="136.243.1.1"
+IP6="5.9.61.10"
+IP7="49.12.15.25"
+IP8="136.243.156.74"
+IP9="78.46.48.1"
+IP10="116.203.10.1"
+IP11="95.179.1.1"
 
 # ── write the xray config with ALL inbounds ──────────────────────────────────
 cat > /etc/config.json << EOF
@@ -157,7 +158,7 @@ H7777="${CODESPACE_NAME}-7777.app.github.dev"
 print_links() {
   local label="$1"
   local link_template="$2"   # must contain __IP__ as placeholder
-  for IP in "$IP1" "$IP2" "$IP3"; do
+  for IP in "$IP1" "$IP2" "$IP3" "$IP4" "$IP5" "$IP6" "$IP7" "$IP8" "$IP9" "$IP10" "$IP11"; do
     echo "${link_template//__IP__/$IP}"
   done
 }
@@ -190,7 +191,7 @@ print_links "VLESS-WS" \
   "vless://${UUID3}@__IP__:443?encryption=none&security=tls&sni=${H8880}&host=${H8880}&type=ws&path=%2Fws#VLESS-WebSocket"
 echo ""
 
-for IP in "$IP1" "$IP2" "$IP3"; do
+for IP in "$IP1" "$IP2" "$IP3" "$IP4" "$IP5" "$IP6" "$IP7" "$IP8" "$IP9" "$IP10" "$IP11"; do
   echo "$(vmess_link "$IP")"
 done
 echo ""
