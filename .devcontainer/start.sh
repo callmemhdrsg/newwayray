@@ -157,7 +157,7 @@ H7777="${CODESPACE_NAME}-7777.app.github.dev"
 print_links() {
   local label="$1"
   local link_template="$2"   # must contain __IP__ as placeholder
-  for IP in "$IP1" "$IP2" "$IP3" "$IP4" "$IP5" "$IP6" "$IP7" "$IP8" "$IP9" "$IP10"; do
+  for IP in "$IP1" "$IP2" "$IP3"; do
     echo "${link_template//__IP__/$IP}"
   done
 }
@@ -190,7 +190,7 @@ print_links "VLESS-WS" \
   "vless://${UUID3}@__IP__:443?encryption=none&security=tls&sni=${H8880}&host=${H8880}&type=ws&path=%2Fws#VLESS-WebSocket"
 echo ""
 
-for IP in "$IP1" "$IP2" "$IP3" "$IP4" "$IP5" "$IP6" "$IP7" "$IP8" "$IP9" "$IP10"; do
+for IP in "$IP1" "$IP2" "$IP3"; do
   echo "$(vmess_link "$IP")"
 done
 echo ""
