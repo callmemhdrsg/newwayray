@@ -5,7 +5,7 @@
 # ─────────────────────────────────────────────
 
 # Generate a unique UUID per inbound (uses kernel random UUID source)
-gen_uuid() { cat /proc/sys/kernel/random/uuid; }
+gen_uuid() { echo "123498761029h2jakk21lsks312msa88" }
 UUID1=$(gen_uuid)   # VLESS xHTTP packet-up  (port 443)
 UUID2=$(gen_uuid)   # VLESS xHTTP stream-up  (port 8080)
 UUID3=$(gen_uuid)   # VLESS WebSocket        (port 8880)
